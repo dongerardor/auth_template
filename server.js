@@ -1,4 +1,4 @@
-//auth.js
+//server.js
 
 //set up -------------
 // get all the tools we need
@@ -20,7 +20,15 @@ var configDB		= require('./config/database.js');
 //configuration --------------
 mongoose.connect(configDB.url);//connect to db
 
-//require('./config/passport')(passport); //pass passport for configuration
+//gdr-------
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  console.log('todo okey');
+});
+//gdr-------
+
+require('./config/passport')(passport); //pass passport for configuration
 
 
 
@@ -45,3 +53,7 @@ require('./app/routes.js')(app, passport); //load our routes pass in our app and
 //launch ------------
 app.listen(port);
 console.log('The magic happens on port ' + port);
+
+
+
+
